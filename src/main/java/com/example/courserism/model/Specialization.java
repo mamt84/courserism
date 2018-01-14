@@ -5,6 +5,9 @@ import static java.util.Optional.ofNullable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Specialization implements CreditProvider
 {
     private Collection<PaidCourse> paidCourses = new ArrayList<>();

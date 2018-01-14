@@ -5,8 +5,12 @@ import static java.util.Optional.ofNullable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.example.courserism.model.Grade.Review;
 
+@Document
 public class Teacher extends PersistentEntity
 {
     private String             name;
@@ -17,6 +21,7 @@ public class Teacher extends PersistentEntity
 
     private Collection<Review> reviews = new ArrayList<>();
 
+    @DBRef( lazy = true )
     private Institution        institution;
 
     public String getName()

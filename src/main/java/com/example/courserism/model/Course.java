@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.example.courserism.model.Grade.Review;
 
+@Document
 public abstract class Course extends PersistentEntity
 {
     private CourseInfo         info;

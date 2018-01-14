@@ -4,6 +4,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class ScheduledCourse extends PersistentEntity
 {
     private Course    course;

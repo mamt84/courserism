@@ -5,17 +5,24 @@ import static java.util.Optional.ofNullable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import com.example.courserism.model.Grade.Prestige;
 import com.example.courserism.model.Grade.Review;
 
+@Document
 public class Institution extends PersistentEntity
 {
+    @Indexed
     private String              name;
 
-    private String              Country;
+    private String              country;
 
     private Prestige            prestige;
 
+    @DBRef( lazy = true )
     private Collection<Teacher> teachers = new ArrayList<>();
 
     public String getName()
@@ -30,12 +37,12 @@ public class Institution extends PersistentEntity
 
     public String getCountry()
     {
-        return Country;
+        return country;
     }
 
     public void setCountry( String country )
     {
-        Country = country;
+        this.country = country;
     }
 
     public Prestige getPrestige()
