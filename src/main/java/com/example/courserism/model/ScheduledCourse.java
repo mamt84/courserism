@@ -4,17 +4,20 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class ScheduledCourse extends PersistentEntity
 {
+    @DBRef( lazy = true )
     private Course    course;
 
     private LocalDate start;
 
     private LocalDate end;
 
+    @DBRef( lazy = true )
     private Teacher   teacher;
 
     public Course getCourse()

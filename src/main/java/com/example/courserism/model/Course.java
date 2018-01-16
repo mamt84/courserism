@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.example.courserism.model.Grade.Review;
@@ -19,7 +20,12 @@ public abstract class Course extends PersistentEntity
 
     private List<Assignment>   assignments = new ArrayList<>();
 
+    @DBRef( lazy = true )
     private Institution        institution;
+
+    private Integer            credits;
+
+    private Double             fee;
 
     private Collection<Review> reviews     = new ArrayList<>();
 
@@ -61,6 +67,26 @@ public abstract class Course extends PersistentEntity
     public void setInstitution( Institution institution )
     {
         this.institution = institution;
+    }
+
+    public Integer getCredits()
+    {
+        return credits;
+    }
+
+    public void setCredits( Integer credits )
+    {
+        this.credits = credits;
+    }
+
+    public Double getFee()
+    {
+        return fee;
+    }
+
+    public void setFee( Double fee )
+    {
+        this.fee = fee;
     }
 
     public Collection<Review> getReviews()

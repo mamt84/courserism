@@ -5,26 +5,28 @@ import static java.util.Optional.ofNullable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Specialization implements CreditProvider
 {
-    private Collection<PaidCourse> paidCourses = new ArrayList<>();
+    @DBRef
+    private Collection<Course> courses = new ArrayList<>();
 
-    public Collection<PaidCourse> getPaidCourses()
+    public Collection<Course> getPaidCourses()
     {
-        return paidCourses;
+        return courses;
     }
 
-    public void setPaidCourses( Collection<PaidCourse> paidCourses )
+    public void setPaidCourses( Collection<Course> courses )
     {
-        this.paidCourses = ofNullable( paidCourses ).orElseGet( ArrayList::new );
+        this.courses = ofNullable( courses ).orElseGet( ArrayList::new );
     }
 
     @Override
     public Integer getCredits()
     {
-        return paidCourses.stream().mapToInt( course -> course.getCredits() ).sum();
+        return courses.stream().mapToInt( course -> course.getCredits() ).sum();
     }
 }
