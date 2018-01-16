@@ -5,6 +5,7 @@ import static java.util.Optional.ofNullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,8 +13,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.example.courserism.model.Grade.Review;
 
 @Document
-public abstract class Course extends PersistentEntity
+public class Course extends PersistentEntity
 {
+    private String             name;
+
     private CourseInfo         info;
 
     private List<Lecture>      lectures    = new ArrayList<>();
@@ -28,6 +31,16 @@ public abstract class Course extends PersistentEntity
     private Double             fee;
 
     private Collection<Review> reviews     = new ArrayList<>();
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName( String name )
+    {
+        this.name = name;
+    }
 
     public CourseInfo getInfo()
     {
@@ -101,6 +114,7 @@ public abstract class Course extends PersistentEntity
 
     public double getQuality()
     {
-        return 0.4 * Grade.average( reviews ) + 0.6 * institution.getPrestige().getValue();
+        return Optional.ofNullable( institution ).map( i -> i.getPrestige() ).map( p -> p.getValue() )
+                .map( p -> 0.4 * Grade.average( reviews ) + 0.6 * p ).orElseGet( () -> Grade.average( reviews ) );
     }
 }

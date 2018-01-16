@@ -17,12 +17,15 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguratio
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 @Configuration
 @ConditionalOnWebApplication
-@AutoConfigureAfter({ HttpMessageConvertersAutoConfiguration.class,
-        JacksonAutoConfiguration.class })
-@EnableConfigurationProperties(RepositoryRestProperties.class)
+@AutoConfigureAfter(
+{ HttpMessageConvertersAutoConfiguration.class, JacksonAutoConfiguration.class } )
+@EnableConfigurationProperties( RepositoryRestProperties.class )
 @Import( RepositoryRestMvcConfiguration.class )
 public class RepositoryConfiguration extends RepositoryRestMvcConfiguration
 {
@@ -36,6 +39,17 @@ public class RepositoryConfiguration extends RepositoryRestMvcConfiguration
     public SpringBootRepositoryRestConfigurer springBootRepositoryRestConfigurer()
     {
         return new SpringBootRepositoryRestConfigurer();
+    }
+
+    @Bean
+    @Override
+    public ObjectMapper objectMapper()
+    {
+        ObjectMapper objectMapper = super.objectMapper();
+        objectMapper.registerModule( new ParameterNamesModule() );
+        objectMapper.registerModule( new Jdk8Module() );
+        objectMapper.registerModule( new JavaTimeModule() );
+        return objectMapper;
     }
 
     @Order( 0 )

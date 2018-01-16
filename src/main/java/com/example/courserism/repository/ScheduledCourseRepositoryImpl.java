@@ -16,7 +16,7 @@ import org.springframework.data.util.CloseableIterator;
 
 import com.example.courserism.model.ScheduledCourse;
 
-public class ScheduledCourseRepositoryCustomImpl implements ScheduledCourseRepositoryCustom
+public class ScheduledCourseRepositoryImpl implements ScheduledCourseRepositoryCustom
 {
     @Autowired
     private MongoTemplate mongoTemplate;

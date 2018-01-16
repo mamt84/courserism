@@ -69,7 +69,7 @@ public class Institution extends PersistentEntity
     {
         double average =
                 teachers.stream().flatMapToInt( teacher -> teacher.getReviews().stream().mapToInt( Grade::getValue ) )
-                        .average().orElse( 0 );
+                        .average().orElse( 2 );
 
         return Review.valueOf( Long.valueOf( Math.round( average ) ).intValue() ).orElse( Review.WORTHLESS );
     }
